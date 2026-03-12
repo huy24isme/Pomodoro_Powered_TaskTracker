@@ -3,11 +3,11 @@
   "private": true,
   "scripts": {
     "dev": "docker compose -p pomodoro-dev -f docker-compose.dev.yml down && docker compose -p pomodoro-dev -f docker-compose.dev.yml build && docker compose -p pomodoro-dev -f docker-compose.dev.yml up -d && docker ps",
-    "dev:logs": "docker compose -p pomodoro-dev -f docker-compose.dev.yml logs -f",
     "dev:down": "docker compose -p pomodoro-dev -f docker-compose.dev.yml down",
+    "start": "docker compose down && docker compose build && docker compose up -d && docker ps",
+    "start:down": "docker compose down",
     "build": "npm run build --prefix frontend",
-    "lint": "npm run lint --prefix frontend",
-    "start": "docker compose down && docker compose build && docker compose up -d && docker ps"
+    "lint": "npm run lint --prefix frontend"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
