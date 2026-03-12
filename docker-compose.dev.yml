@@ -2,50 +2,40 @@ services:
   pomodoro-frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
-    container_name: pomodoro-frontend
+      dockerfile: Dockerfile.dev
+    container_name: pomodoro-frontend-dev
     restart: unless-stopped
     environment:
-      NEXT_PUBLIC_API_BASE_URL: http://pomodoro-backend:5000
+      NEXT_PUBLIC_API_BASE_URL: http://pomodoro-backend-dev:5000
     ports:
-      - "3004:3000"
+      - "3005:3000"
+    volumes:
+      - ./frontend/src:/app/src
     depends_on:
       pomodoro-backend:
         condition: service_healthy
     networks:
-      - pomodoro-network
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "wget",
-          "--no-verbose",
-          "--tries=1",
-          "--spider",
-          "http://localhost:3000",
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 15s
+      - pomodoro-dev-network
 
   pomodoro-backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
-    container_name: pomodoro-backend
+      dockerfile: Dockerfile.dev
+    container_name: pomodoro-backend-dev
     restart: unless-stopped
     env_file:
       - ./backend/.env
     ports:
-      - "5004:5000"
+      - "5005:5000"
+    volumes:
+      - ./backend/src:/app/src
     depends_on:
       pomodoro-mongodb:
         condition: service_healthy
       pomodoro-redis:
         condition: service_healthy
     networks:
-      - pomodoro-network
+      - pomodoro-dev-network
     healthcheck:
       test:
         [
@@ -63,19 +53,19 @@ services:
 
   pomodoro-mongodb:
     image: mongo:7.0.5
-    container_name: pomodoro-mongodb
+    container_name: pomodoro-mongodb-dev
     restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:-admin}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-password}
       MONGO_INITDB_DATABASE: ${MONGO_DATABASE:-pomodoro-tracker}
     ports:
-      - "27018:27017"
+      - "27019:27017"
     volumes:
-      - mongodb_data:/data/db
-      - mongodb_config:/data/configdb
+      - mongodb_dev_data:/data/db
+      - mongodb_dev_config:/data/configdb
     networks:
-      - pomodoro-network
+      - pomodoro-dev-network
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 10s
@@ -85,15 +75,15 @@ services:
 
   pomodoro-redis:
     image: redis:7-alpine
-    container_name: pomodoro-redis
+    container_name: pomodoro-redis-dev
     restart: unless-stopped
     command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-redis_password}
     ports:
-      - "6380:6379"
+      - "6381:6379"
     volumes:
-      - redis_data:/data
+      - redis_dev_data:/data
     networks:
-      - pomodoro-network
+      - pomodoro-dev-network
     healthcheck:
       test:
         ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-redis_password}", "ping"]
@@ -103,10 +93,10 @@ services:
       start_period: 5s
 
 volumes:
-  mongodb_data:
-  mongodb_config:
-  redis_data:
+  mongodb_dev_data:
+  mongodb_dev_config:
+  redis_dev_data:
 
 networks:
-  pomodoro-network:
+  pomodoro-dev-network:
     driver: bridge

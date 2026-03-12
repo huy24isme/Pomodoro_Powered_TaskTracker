@@ -2,12 +2,12 @@
   "name": "pomodoro-tasktracker",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix frontend\" \"npm run dev --prefix backend\"",
-    "dev:frontend": "npm run dev --prefix frontend",
-    "dev:backend": "npm run dev --prefix backend",
+    "dev": "docker compose -p pomodoro-dev -f docker-compose.dev.yml down && docker compose -p pomodoro-dev -f docker-compose.dev.yml build && docker compose -p pomodoro-dev -f docker-compose.dev.yml up -d && docker ps",
+    "dev:logs": "docker compose -p pomodoro-dev -f docker-compose.dev.yml logs -f",
+    "dev:down": "docker compose -p pomodoro-dev -f docker-compose.dev.yml down",
     "build": "npm run build --prefix frontend",
     "lint": "npm run lint --prefix frontend",
-    "start": "docker compose down && docker compose build && docker compose up -d"
+    "start": "docker compose down && docker compose build && docker compose up -d && docker ps"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
