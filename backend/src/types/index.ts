@@ -1,0 +1,10 @@
+export type WorkspaceRole = "owner" | "admin" | "member";
+export type BoardType = "kanban" | "list" | "calendar";
+export type TaskPriority = "low" | "medium" | "high" | "urgent";
+export type PomodoroType = "focus" | "short_break" | "long_break";
+export type PomodoroStatus = "running" | "completed" | "cancelled";
+export type MusicMode = "focus" | "break" | "ambient";
+export type InvitationStatus = "pending" | "accepted" | "declined" | "cancelled";
+export type NotificationType = "workspace_invite" | "task_assigned" | "pomodoro_complete" | "mention" | "system";
+export type AiProvider = "openai" | "anthropic" | "google";
+export type AiAction = "rewrite_note" | "summarize" | "suggest_tasks" | "chat";
