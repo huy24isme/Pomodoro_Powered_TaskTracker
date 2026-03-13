@@ -15,6 +15,13 @@ export const env = {
   redisPort: parseInt(process.env.REDIS_PORT || "6379", 10),
   redisPassword: process.env.REDIS_PASSWORD || "",
 
+  // JWT
+  jwtSecret: process.env.JWT_SECRET || "dev-jwt-secret-change-in-production",
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || "15m",
+  jwtRefreshSecret:
+    process.env.JWT_REFRESH_SECRET || "dev-refresh-secret-change-in-production",
+  jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || "7d",
+
   // Rate Limiting
   rateLimitWindowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || "900000", 10), // 15 minutes
   rateLimitMaxRequests: parseInt(

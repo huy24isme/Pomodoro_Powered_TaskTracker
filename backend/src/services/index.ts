@@ -1,1 +1,13 @@
 export { getHealthStatus } from "./health.service";
+export * as authService from "./auth.service";
+export * as workspaceService from "./workspace.service";
+export * as boardService from "./board.service";
+export * as taskService from "./task.service";
+export * as noteService from "./note.service";
+export * as pomodoroSessionService from "./pomodoro-session.service";
+export * as musicTrackService from "./music-track.service";
+export * as invitationService from "./invitation.service";
+export * as messageService from "./message.service";
+export * as notificationService from "./notification.service";
+export * as activityLogService from "./activity-log.service";
+export * as aiInteractionService from "./ai-interaction.service";

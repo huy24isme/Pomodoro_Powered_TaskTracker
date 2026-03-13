@@ -1,1 +1,13 @@
 export { healthCheck } from "./health.controller";
+export * as authController from "./auth.controller";
+export * as workspaceController from "./workspace.controller";
+export * as boardController from "./board.controller";
+export * as taskController from "./task.controller";
+export * as noteController from "./note.controller";
+export * as pomodoroSessionController from "./pomodoro-session.controller";
+export * as musicTrackController from "./music-track.controller";
+export * as invitationController from "./invitation.controller";
+export * as messageController from "./message.controller";
+export * as notificationController from "./notification.controller";
+export * as activityLogController from "./activity-log.controller";
+export * as aiInteractionController from "./ai-interaction.controller";
